@@ -15,12 +15,12 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Addon implements Serializable {
 
-    @Id
-    private UUID id;
-    private String name;
-    private String description;
-    private String imageUrl;
-    private Boolean enabled;
-    private BigDecimal price;
-    private List<Flavor> flavors;
+  @Id
+  private UUID id;
+  private String name;
+  private String description;
+  private String imageUrl;
+  private Boolean enabled;
+  private BigDecimal price;
+  private List<Flavor> flavors;
 }

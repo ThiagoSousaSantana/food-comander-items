@@ -15,16 +15,15 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Item implements Serializable {
 
-    @Id
-    private UUID id;
-    private String name;
-    private String description;
-    private BigDecimal price;
-    private String classification;
-    private String size;
-    private String imageUrl;
-    private String rating;
-    private Boolean enable;
-    private List<Addon> addons;
-
+  @Id
+  private UUID id;
+  private String name;
+  private String description;
+  private BigDecimal price;
+  private String classification;
+  private String size;
+  private String imageUrl;
+  private String rating;
+  private Boolean enable;
+  private List<Addon> addons;
 }

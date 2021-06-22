@@ -14,10 +14,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Flavor implements Serializable {
 
-    @Id
-    private UUID id;
-    private String name;
-    private String description;
-    private Boolean enable;
-    private BigDecimal price;
+  @Id
+  private UUID id;
+  private String name;
+  private String description;
+  private Boolean enable;
+  private BigDecimal price;
 }
