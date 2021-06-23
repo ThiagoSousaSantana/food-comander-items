@@ -1,11 +1,15 @@
 package com.foodcomander.items.controller;
 
+import com.foodcomander.items.models.Addon;
+import com.foodcomander.items.models.Flavor;
 import com.foodcomander.items.models.Item;
 import com.foodcomander.items.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -23,5 +27,27 @@ public class ItemController {
             .buildAndExpand(itemInsert.getId())
             .toUri();
     return ResponseEntity.created(uri).body(itemInsert);
+  }
+
+  @PostMapping("/flavor/{id}")
+  public ResponseEntity<Item> insertFlavor(@PathVariable UUID id, @RequestBody Flavor flavor){
+    var newFlavor = itemService.insertFlavor(id, flavor);
+    var uri =
+            ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(newFlavor.getId())
+                    .toUri();
+    return ResponseEntity.created(uri).body(newFlavor);
+  }
+
+  @PostMapping("/addon/{id}")
+  public ResponseEntity<Item> insertAddon(@PathVariable UUID id, @RequestBody Addon addon){
+    var newAddon = itemService.insertAddon(id, addon);
+    var uri =
+            ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(newAddon.getId())
+                    .toUri();
+    return ResponseEntity.created(uri).body(newAddon);
   }
 }

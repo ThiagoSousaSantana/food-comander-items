@@ -1,5 +1,8 @@
 package com.foodcomander.items.services;
 
+import com.foodcomander.items.exceptions.ObjectNotFoundException;
+import com.foodcomander.items.models.Addon;
+import com.foodcomander.items.models.Flavor;
 import com.foodcomander.items.models.Item;
 import com.foodcomander.items.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,30 @@ public class ItemService {
 
   public Item insert(Item item) {
     item.setId(UUID.randomUUID());
+    item.getFlavors().forEach(obj -> obj.setId(UUID.randomUUID()));
+    item.getAddons().forEach(obj -> obj.setId(UUID.randomUUID()));
+    return itemRepository.save(item);
+
+  }
+
+  public Item itemFindById(UUID id){
+    var item = itemRepository.findById(id);
+    return item.orElseThrow(() -> new ObjectNotFoundException("Object not found"));
+  }
+
+  public Item insertFlavor(UUID idItem, Flavor flavor){
+    var item = itemFindById(idItem);
+    flavor.setId(UUID.randomUUID());
+    item.getFlavors().add(flavor);
     return itemRepository.save(item);
   }
+
+  public Item insertAddon(UUID idItem, Addon addon){
+    var item = itemFindById(idItem);
+    addon.setId(UUID.randomUUID());
+    item.getAddons().add(addon);
+    return itemRepository.save(item);
+  }
+
+
 }
