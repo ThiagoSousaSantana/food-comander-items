@@ -25,5 +25,6 @@ public class Item implements Serializable {
   private String imageUrl;
   private String rating;
   private Boolean enable;
+  private List<Flavor> flavors;
   private List<Addon> addons;
 }
