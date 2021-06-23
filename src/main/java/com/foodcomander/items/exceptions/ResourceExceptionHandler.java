@@ -16,7 +16,7 @@ public class ResourceExceptionHandler {
     StandardException error =
         new StandardException(
             HttpStatus.NOT_FOUND.value(),
-            "Não foi possível encontrar objeto",
+            "Could not find object",
             e.getMessage(),
             System.currentTimeMillis(),
             request.getRequestURI());

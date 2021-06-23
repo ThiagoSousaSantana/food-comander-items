@@ -16,6 +16,6 @@ public class Flavor implements Serializable {
   private UUID id;
   private String name;
   private String description;
-  private Boolean enable;
+  private Boolean enabled;
   private BigDecimal price;
 }
