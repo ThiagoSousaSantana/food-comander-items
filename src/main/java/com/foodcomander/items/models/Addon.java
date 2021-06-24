@@ -1,5 +1,6 @@
 package com.foodcomander.items.models;
 
+import com.foodcomander.items.Dto.AddonUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -19,5 +20,14 @@ public class Addon implements Serializable {
   private String imageUrl;
   private Boolean enabled;
   private BigDecimal price;
+
+  public Addon(Addon addon, AddonUpdate addonUpdate) {
+    this.id = addon.getId();
+    this.name = addonUpdate.getName();
+    this.description = addonUpdate.getDescription();
+    this.imageUrl = addonUpdate.getImageUrl();
+    this.enabled = addonUpdate.getEnabled();
+    this.price = addonUpdate.getPrice();
+  }
 
 }

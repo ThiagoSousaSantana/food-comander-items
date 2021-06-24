@@ -3,6 +3,7 @@ package com.foodcomander.items.models;
 import com.foodcomander.items.Dto.ItemUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Data
 @Document(collection = "item")
 @AllArgsConstructor
+@NoArgsConstructor
 public class Item implements Serializable {
 
   @Id
@@ -28,7 +30,6 @@ public class Item implements Serializable {
   private Boolean enabled;
   private List<Flavor> flavors;
   private List<Addon> addons;
-
 
 
   public Item(ItemUpdate itemUpdate, Item item) {

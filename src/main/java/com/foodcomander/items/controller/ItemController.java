@@ -1,5 +1,8 @@
 package com.foodcomander.items.controller;
 
+import com.foodcomander.items.Dto.AddonUpdate;
+import com.foodcomander.items.Dto.FlavorUpdate;
+import com.foodcomander.items.Dto.ItemUpdate;
 import com.foodcomander.items.models.Addon;
 import com.foodcomander.items.models.Flavor;
 import com.foodcomander.items.models.Item;
@@ -62,5 +65,26 @@ public class ItemController {
   public ResponseEntity<Item> findById(@PathVariable UUID id) {
     var item = itemService.itemFindById(id);
     return ResponseEntity.ok(item);
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<Item> updateItem(
+      @PathVariable UUID id, @RequestBody ItemUpdate itemUpdate) {
+    var item = itemService.updateItem(id, itemUpdate);
+    return ResponseEntity.ok(item);
+  }
+
+  @PutMapping("/flavor/{id}/item/{itemId}")
+  public ResponseEntity<Item> updateFlavor(
+      @PathVariable UUID id, @PathVariable UUID itemId, @RequestBody FlavorUpdate flavorUpdate) {
+    var flavor = itemService.updateFlavor(itemId, id, flavorUpdate);
+    return ResponseEntity.ok(flavor);
+  }
+
+  @PutMapping("/addon/{id}/item/{itemId}")
+  public ResponseEntity<Item> updateFlavor(
+      @PathVariable UUID id, @PathVariable UUID itemId, @RequestBody AddonUpdate addonUpdate) {
+    var addon = itemService.updateAddon(itemId, id, addonUpdate);
+    return ResponseEntity.ok(addon);
   }
 }
