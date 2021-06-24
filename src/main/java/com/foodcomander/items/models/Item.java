@@ -1,6 +1,6 @@
 package com.foodcomander.items.models;
 
-import com.foodcomander.items.Dto.ItemUpdate;
+import com.foodcomander.items.dto.ItemUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

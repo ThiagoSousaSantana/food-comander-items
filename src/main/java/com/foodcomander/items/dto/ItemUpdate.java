@@ -1,4 +1,4 @@
-package com.foodcomander.items.Dto;
+package com.foodcomander.items.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

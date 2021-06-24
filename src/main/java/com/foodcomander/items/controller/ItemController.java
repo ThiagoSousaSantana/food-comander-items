@@ -1,8 +1,8 @@
 package com.foodcomander.items.controller;
 
-import com.foodcomander.items.Dto.AddonUpdate;
-import com.foodcomander.items.Dto.FlavorUpdate;
-import com.foodcomander.items.Dto.ItemUpdate;
+import com.foodcomander.items.dto.AddonUpdate;
+import com.foodcomander.items.dto.FlavorUpdate;
+import com.foodcomander.items.dto.ItemUpdate;
 import com.foodcomander.items.models.Addon;
 import com.foodcomander.items.models.Flavor;
 import com.foodcomander.items.models.Item;
