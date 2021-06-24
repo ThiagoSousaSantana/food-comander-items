@@ -1,5 +1,7 @@
 package com.foodcomander.items.services;
 
+import com.foodcomander.items.Dto.FlavorUpdate;
+import com.foodcomander.items.Dto.ItemUpdate;
 import com.foodcomander.items.exceptions.ObjectNotFoundException;
 import com.foodcomander.items.models.Addon;
 import com.foodcomander.items.models.Flavor;
@@ -8,7 +10,9 @@ import com.foodcomander.items.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemService {
@@ -42,5 +46,13 @@ public class ItemService {
     return itemRepository.save(item);
   }
 
+  public List<Item> findAllItem(){
+    return itemRepository.findAll();
+  }
+
+  public Item updateItem (UUID id, ItemUpdate itemUpdate){
+    var item = itemFindById(id);
+    return itemRepository.save(new Item(itemUpdate, item));
+  }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -30,24 +31,36 @@ public class ItemController {
   }
 
   @PostMapping("/flavor/{id}")
-  public ResponseEntity<Item> insertFlavor(@PathVariable UUID id, @RequestBody Flavor flavor){
+  public ResponseEntity<Item> insertFlavor(@PathVariable UUID id, @RequestBody Flavor flavor) {
     var newFlavor = itemService.insertFlavor(id, flavor);
     var uri =
-            ServletUriComponentsBuilder.fromCurrentRequest()
-                    .path("/{id}")
-                    .buildAndExpand(newFlavor.getId())
-                    .toUri();
+        ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(newFlavor.getId())
+            .toUri();
     return ResponseEntity.created(uri).body(newFlavor);
   }
 
   @PostMapping("/addon/{id}")
-  public ResponseEntity<Item> insertAddon(@PathVariable UUID id, @RequestBody Addon addon){
+  public ResponseEntity<Item> insertAddon(@PathVariable UUID id, @RequestBody Addon addon) {
     var newAddon = itemService.insertAddon(id, addon);
     var uri =
-            ServletUriComponentsBuilder.fromCurrentRequest()
-                    .path("/{id}")
-                    .buildAndExpand(newAddon.getId())
-                    .toUri();
+        ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(newAddon.getId())
+            .toUri();
     return ResponseEntity.created(uri).body(newAddon);
+  }
+
+  @GetMapping
+  public ResponseEntity<List<Item>> findAll() {
+    var listItem = itemService.findAllItem();
+    return ResponseEntity.ok(listItem);
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Item> findById(@PathVariable UUID id) {
+    var item = itemService.itemFindById(id);
+    return ResponseEntity.ok(item);
   }
 }

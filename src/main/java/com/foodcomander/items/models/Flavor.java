@@ -1,5 +1,6 @@
 package com.foodcomander.items.models;
 
+import com.foodcomander.items.Dto.FlavorUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -18,4 +19,13 @@ public class Flavor implements Serializable {
   private String description;
   private Boolean enabled;
   private BigDecimal price;
+
+  public Flavor(Flavor flavor, FlavorUpdate flavorUpdate) {
+
+    this.id = flavor.getId();
+    this.name = flavorUpdate.getName();
+    this.description = flavorUpdate.getDescription();
+    this.enabled = flavorUpdate.getEnabled();
+    this.price = flavorUpdate.getPrice();
+  }
 }

@@ -2,6 +2,7 @@ package com.foodcomander.items.repositories;
 
 import com.foodcomander.items.models.Item;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 import java.util.UUID;
 
