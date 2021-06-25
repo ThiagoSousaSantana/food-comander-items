@@ -23,12 +23,16 @@ public class ItemService {
   }
 
   public Item itemFindById(UUID id) {
-    var item = itemRepository.findById(id);
-    return item.orElseThrow(ObjectNotFoundException::new);
+    var itemOptional = itemRepository.findById(id);
+    var item = itemOptional.orElseThrow(ObjectNotFoundException::new);
+    if (item.getEnabled() == false){
+      throw new ObjectNotFoundException();
+    }
+    return item;
   }
 
   public List<Item> findAllItem() {
-    return itemRepository.findAll();
+    return itemRepository.findAllByEnabledTrue();
   }
 
   public Item updateItem(UUID id, ItemUpdate itemUpdate) {
@@ -38,6 +42,7 @@ public class ItemService {
 
   public void deleteItem(UUID id) {
     var item = itemFindById(id);
-    itemRepository.delete(item);
+    item.setEnabled(false);
+    itemRepository.save(item);
   }
 }

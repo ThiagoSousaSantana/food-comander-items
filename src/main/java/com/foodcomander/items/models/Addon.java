@@ -3,6 +3,7 @@ package com.foodcomander.items.models;
 import com.foodcomander.items.dto.AddonUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Addon implements Serializable {
 
   @Id private UUID id;
