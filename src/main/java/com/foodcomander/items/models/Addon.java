@@ -22,8 +22,8 @@ public class Addon implements Serializable {
   private Boolean enabled;
   private BigDecimal price;
 
-  public Addon(UUID addonId, AddonUpdate addonUpdate) {
-    this.id = addonId;
+  public Addon(AddonUpdate addonUpdate) {
+    this.id = addonUpdate.getId();
     this.name = addonUpdate.getName();
     this.description = addonUpdate.getDescription();
     this.imageUrl = addonUpdate.getImageUrl();

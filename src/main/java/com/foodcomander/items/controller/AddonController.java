@@ -22,27 +22,26 @@ public class AddonController {
   @Autowired private AddonService addonService;
 
   @ApiOperation(value = "Insert addon")
-  @PostMapping("/addon/{id}")
-  public ResponseEntity<Item> insertAddon(@PathVariable UUID id, @RequestBody Addon addon) {
-    var newAddon = addonService.insertAddon(id, addon);
+  @PostMapping("/item/{itemId}")
+  public ResponseEntity<Item> insertAddon(@PathVariable UUID itemId, @RequestBody Addon addon) {
+    var newAddon = addonService.insertAddon(itemId, addon);
     var uri =
         ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}")
+            .path("/{itemId}")
             .buildAndExpand(newAddon.getId())
             .toUri();
     return ResponseEntity.created(uri).body(newAddon);
   }
 
   @ApiOperation(value = "Update addon")
-  @PutMapping("/addon/{id}/item/{itemId}")
-  public ResponseEntity<Item> updateAddon(
-      @PathVariable UUID id, @PathVariable UUID itemId, @RequestBody AddonUpdate addonUpdate) {
-    var addon = addonService.updateAddon(itemId, id, addonUpdate);
+  @PutMapping("item/{itemId}")
+  public ResponseEntity<Item> updateAddon(@PathVariable UUID itemId, @RequestBody AddonUpdate addonUpdate) {
+    var addon = addonService.updateAddon(itemId, addonUpdate);
     return ResponseEntity.ok(addon);
   }
 
   @ApiOperation(value = "Delete addon")
-  @DeleteMapping("/addon/{id}/item/{itemId}")
+  @DeleteMapping("/{id}/item/{itemId}")
   public ResponseEntity<Void> deleteAddon(@PathVariable UUID id, @PathVariable UUID itemId) {
     addonService.deleteAddon(itemId, id);
     return ResponseEntity.ok().build();

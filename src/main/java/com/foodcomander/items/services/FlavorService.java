@@ -19,7 +19,7 @@ public class FlavorService {
   public Item insertFlavor(UUID idItem, Flavor flavor) {
     var item = itemService.itemFindById(idItem);
     flavor.setId(UUID.randomUUID());
-    item.getFlavors().add(flavor);
+    item.insertFlavor(flavor);
     return itemRepository.save(item);
   }
 
@@ -31,7 +31,7 @@ public class FlavorService {
 
   public void deleteFlavor(UUID idItem, UUID idFlavor) {
     var item = itemService.itemFindById(idItem);
-    item.removeFlavorById(idFlavor);
+    item.deleteFlavor(idFlavor);
     itemRepository.save(item);
   }
 }

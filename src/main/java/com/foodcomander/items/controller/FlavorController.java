@@ -22,12 +22,12 @@ public class FlavorController {
   @Autowired private FlavorService flavorService;
 
   @ApiOperation(value = "Insert flavor")
-  @PostMapping("/{id}")
-  public ResponseEntity<Item> insertFlavor(@PathVariable UUID id, @RequestBody Flavor flavor) {
-    var newFlavor = flavorService.insertFlavor(id, flavor);
+  @PostMapping("/item/{itemId}")
+  public ResponseEntity<Item> insertFlavor(@PathVariable UUID itemId, @RequestBody Flavor flavor) {
+    var newFlavor = flavorService.insertFlavor(itemId, flavor);
     var uri =
         ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}")
+            .path("/{idItem}")
             .buildAndExpand(newFlavor.getId())
             .toUri();
     return ResponseEntity.created(uri).body(newFlavor);

@@ -1,5 +1,6 @@
 package com.foodcomander.items.models;
 
+import com.foodcomander.items.dto.AddonUpdate;
 import com.foodcomander.items.dto.FlavorUpdate;
 import com.foodcomander.items.dto.ItemUpdate;
 import com.foodcomander.items.exceptions.ObjectNotFoundException;
@@ -57,7 +58,11 @@ public class Item implements Serializable {
         .orElseThrow(ObjectNotFoundException::new);
   }
 
-  public void removeFlavorById(UUID idFlavor) {
+  public void insertFlavor(Flavor flavor) {
+    this.flavors.add(flavor);
+  }
+
+  public void deleteFlavor(UUID idFlavor) {
     var flavor = findFlavorById(idFlavor);
     flavor.setEnabled(false);
     this.flavors.remove(flavor);
@@ -75,6 +80,30 @@ public class Item implements Serializable {
     this.flavors.add(newFlavor);
   }
 
+  public Addon findAddonById(UUID idAddon) {
+    return this.getAddons().stream()
+            .filter(obj -> obj.getId().equals(idAddon))
+            .findFirst()
+            .orElseThrow(ObjectNotFoundException::new);
+  }
+
+  public void insertAddons(Addon addon) {
+    this.addons.add(addon);
+  }
+  public void addonUpdate(AddonUpdate addonUpdate) {
+    var addon = this.addons.stream().filter(obj -> obj.getId().equals(addonUpdate.getId())).findFirst().orElseThrow(ObjectNotFoundException::new);
+    this.addons.remove(addon);
+    var newAddon = new Addon(addonUpdate);
+    this.addons.add(newAddon);
+  }
+
+  public void deleteAddon(UUID idAddon) {
+    var addon = findAddonById(idAddon);
+    this.addons.remove(addon);
+    addon.setEnabled(false);
+    this.addons.add(addon);
+  }
+
   public List<Flavor> getFlavors() {
     return unmodifiableList(this.flavors);
   }
@@ -82,4 +111,6 @@ public class Item implements Serializable {
   public List<Addon> getAddons() {
     return unmodifiableList(this.addons);
   }
+
+
 }

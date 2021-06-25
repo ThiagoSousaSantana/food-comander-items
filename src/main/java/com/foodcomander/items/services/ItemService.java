@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemService {
@@ -25,14 +26,36 @@ public class ItemService {
   public Item itemFindById(UUID id) {
     var itemOptional = itemRepository.findById(id);
     var item = itemOptional.orElseThrow(ObjectNotFoundException::new);
-    if (item.getEnabled() == false){
+    if (item.getEnabled() == false) {
       throw new ObjectNotFoundException();
     }
+    item.setFlavors(
+        item.getFlavors().stream()
+            .filter(flavor -> flavor.getEnabled().equals(true))
+            .collect(Collectors.toList()));
+    item.setAddons(
+        item.getAddons().stream()
+            .filter(addon -> addon.getEnabled().equals(true))
+            .collect(Collectors.toList()));
     return item;
   }
 
   public List<Item> findAllItem() {
-    return itemRepository.findAllByEnabledTrue();
+    var item = itemRepository.findAllByEnabledTrue();
+    item.stream()
+        .forEach(
+            obj -> {
+              obj.setFlavors(
+                  obj.getFlavors().stream()
+                      .filter(flavor -> flavor.getEnabled().equals(true))
+                      .collect(Collectors.toList()));
+              obj.setAddons(
+                  obj.getAddons().stream()
+                      .filter(addon -> addon.getEnabled().equals(true))
+                      .collect(Collectors.toList()));
+            });
+
+    return item;
   }
 
   public Item updateItem(UUID id, ItemUpdate itemUpdate) {

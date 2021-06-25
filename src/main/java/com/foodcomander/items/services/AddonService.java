@@ -20,30 +20,21 @@ public class AddonService {
   public Item insertAddon(UUID idItem, Addon addon) {
     var item = itemService.itemFindById(idItem);
     addon.setId(UUID.randomUUID());
-    item.getAddons().add(addon);
+    item.insertAddons(addon);
     return itemRepository.save(item);
   }
 
-  public Item updateAddon(UUID idItem, UUID idAddon, AddonUpdate addonUpdate) {
+  public Item updateAddon(UUID idItem,  AddonUpdate addonUpdate) {
     var item = itemService.itemFindById(idItem);
-    var addon = addonFindById(item, idAddon);
-    var newAddon = new Addon(idAddon, addonUpdate);
-    item.getAddons().remove(addon);
-    item.getAddons().add(newAddon);
+    item.addonUpdate(addonUpdate);
     return itemRepository.save(item);
   }
 
   public void deleteAddon(UUID idItem, UUID idAddon) {
     var item = itemService.itemFindById(idItem);
-    var addon = addonFindById(item, idAddon);
-    item.getAddons().remove(addon);
+    item.deleteAddon(idAddon);
     itemRepository.save(item);
   }
 
-  private Addon addonFindById(Item item, UUID idAddon) {
-    return item.getAddons().stream()
-        .filter(obj -> obj.getId().equals(idAddon))
-        .findFirst()
-        .orElseThrow(ObjectNotFoundException::new);
-  }
+
 }

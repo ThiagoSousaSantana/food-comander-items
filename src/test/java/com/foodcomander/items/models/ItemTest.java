@@ -55,7 +55,7 @@ class ItemTest {
                                 Flavor.builder().id(randomUUID()).build())))
                 .build();
 
-        item.removeFlavorById(uuid);
+        item.deleteFlavor(uuid);
 
         assertThat(item.getFlavors().size(), is(2));
         assertThat(item.getFlavors(), not(hasItem(flavor)));
