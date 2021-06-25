@@ -15,6 +15,7 @@ public class AddonUpdate {
 
   @NotNull(message = "id addon is not null")
   private UUID id;
+
   private String name;
   private String description;
   private String imageUrl;

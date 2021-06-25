@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -36,7 +37,7 @@ public class FlavorController {
   @ApiOperation(value = "Update flavor")
   @PutMapping("/item/{itemId}")
   public ResponseEntity<Item> updateFlavor(
-      @PathVariable UUID itemId, @RequestBody FlavorUpdate flavorUpdate) {
+      @PathVariable UUID itemId,@Valid @RequestBody FlavorUpdate flavorUpdate) {
     var flavor = flavorService.updateFlavor(itemId, flavorUpdate);
     return ResponseEntity.ok(flavor);
   }

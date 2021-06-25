@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -35,7 +36,7 @@ public class AddonController {
 
   @ApiOperation(value = "Update addon")
   @PutMapping("item/{itemId}")
-  public ResponseEntity<Item> updateAddon(@PathVariable UUID itemId, @RequestBody AddonUpdate addonUpdate) {
+  public ResponseEntity<Item> updateAddon(@PathVariable UUID itemId,@Valid @RequestBody AddonUpdate addonUpdate) {
     var addon = addonService.updateAddon(itemId, addonUpdate);
     return ResponseEntity.ok(addon);
   }
