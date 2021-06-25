@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ItemUpdate {
 
-
   private String name;
   private String description;
   private BigDecimal price;
@@ -18,5 +17,4 @@ public class ItemUpdate {
   private String imageUrl;
   private String rating;
   private Boolean enabled;
-
- }
+}

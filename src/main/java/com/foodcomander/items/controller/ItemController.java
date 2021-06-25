@@ -1,10 +1,6 @@
 package com.foodcomander.items.controller;
 
-import com.foodcomander.items.dto.AddonUpdate;
-import com.foodcomander.items.dto.FlavorUpdate;
 import com.foodcomander.items.dto.ItemUpdate;
-import com.foodcomander.items.models.Addon;
-import com.foodcomander.items.models.Flavor;
 import com.foodcomander.items.models.Item;
 import com.foodcomander.items.services.ItemService;
 import io.swagger.annotations.Api;
@@ -37,30 +33,6 @@ public class ItemController {
     return ResponseEntity.created(uri).body(itemInsert);
   }
 
-  @ApiOperation(value = "Insert flavor")
-  @PostMapping("/flavor/{id}")
-  public ResponseEntity<Item> insertFlavor(@PathVariable UUID id, @RequestBody Flavor flavor) {
-    var newFlavor = itemService.insertFlavor(id, flavor);
-    var uri =
-        ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}")
-            .buildAndExpand(newFlavor.getId())
-            .toUri();
-    return ResponseEntity.created(uri).body(newFlavor);
-  }
-
-  @ApiOperation(value = "Insert addon")
-  @PostMapping("/addon/{id}")
-  public ResponseEntity<Item> insertAddon(@PathVariable UUID id, @RequestBody Addon addon) {
-    var newAddon = itemService.insertAddon(id, addon);
-    var uri =
-        ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}")
-            .buildAndExpand(newAddon.getId())
-            .toUri();
-    return ResponseEntity.created(uri).body(newAddon);
-  }
-
   @ApiOperation(value = "Find all items")
   @GetMapping
   public ResponseEntity<List<Item>> findAll() {
@@ -83,40 +55,10 @@ public class ItemController {
     return ResponseEntity.ok(item);
   }
 
-  @ApiOperation(value = "Update flavor")
-  @PutMapping("{itemId}/flavor/{id}")
-  public ResponseEntity<Item> updateFlavor(
-      @PathVariable UUID id, @PathVariable UUID itemId, @RequestBody FlavorUpdate flavorUpdate) {
-    var flavor = itemService.updateFlavor(itemId, id, flavorUpdate);
-    return ResponseEntity.ok(flavor);
-  }
-
-  @ApiOperation(value = "Update addon")
-  @PutMapping("/addon/{id}/item/{itemId}")
-  public ResponseEntity<Item> updateAddon(
-      @PathVariable UUID id, @PathVariable UUID itemId, @RequestBody AddonUpdate addonUpdate) {
-    var addon = itemService.updateAddon(itemId, id, addonUpdate);
-    return ResponseEntity.ok(addon);
-  }
-
   @ApiOperation(value = "Delete item")
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteItem(@PathVariable UUID id) {
     itemService.deleteItem(id);
-    return ResponseEntity.ok().build();
-  }
-
-  @ApiOperation(value = "Delete flavor")
-  @DeleteMapping("/flavor/{id}/item/{itemId}")
-  public ResponseEntity<Void> deleteFlavor(@PathVariable UUID id, @PathVariable UUID itemId) {
-    itemService.deleteFlavor(itemId, id);
-    return ResponseEntity.ok().build();
-  }
-
-  @ApiOperation(value = "Delete addon")
-  @DeleteMapping("/addon/{id}/item/{itemId}")
-  public ResponseEntity<Void> deleteAddon(@PathVariable UUID id, @PathVariable UUID itemId) {
-    itemService.deleteAddon(itemId, id);
     return ResponseEntity.ok().build();
   }
 }

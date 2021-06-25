@@ -17,8 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Flavor implements Serializable {
 
-  @Id
-  private UUID id;
+  @Id private UUID id;
   private String name;
   private String description;
   private Boolean enabled;

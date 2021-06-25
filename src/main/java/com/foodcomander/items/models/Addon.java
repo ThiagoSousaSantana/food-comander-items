@@ -13,8 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Addon implements Serializable {
 
-  @Id
-  private UUID id;
+  @Id private UUID id;
   private String name;
   private String description;
   private String imageUrl;
@@ -29,5 +28,4 @@ public class Addon implements Serializable {
     this.enabled = addonUpdate.getEnabled();
     this.price = addonUpdate.getPrice();
   }
-
 }

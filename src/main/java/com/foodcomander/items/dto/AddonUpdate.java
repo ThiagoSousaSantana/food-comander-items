@@ -11,9 +11,9 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class AddonUpdate {
 
-    private String name;
-    private String description;
-    private String imageUrl;
-    private Boolean enabled;
-    private BigDecimal price;
+  private String name;
+  private String description;
+  private String imageUrl;
+  private Boolean enabled;
+  private BigDecimal price;
 }
