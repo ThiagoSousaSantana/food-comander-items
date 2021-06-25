@@ -84,7 +84,7 @@ public class ItemController {
   }
 
   @ApiOperation(value = "Update flavor")
-  @PutMapping("/flavor/{id}/item/{itemId}")
+  @PutMapping("{itemId}/flavor/{id}")
   public ResponseEntity<Item> updateFlavor(
       @PathVariable UUID id, @PathVariable UUID itemId, @RequestBody FlavorUpdate flavorUpdate) {
     var flavor = itemService.updateFlavor(itemId, id, flavorUpdate);

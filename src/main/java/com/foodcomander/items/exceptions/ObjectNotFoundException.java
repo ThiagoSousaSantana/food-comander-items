@@ -2,7 +2,7 @@ package com.foodcomander.items.exceptions;
 
 public class ObjectNotFoundException extends RuntimeException{
 
-    public ObjectNotFoundException(String msg) {
-        super(msg);
+    public ObjectNotFoundException() {
+        super("Object not found");
     }
 }
