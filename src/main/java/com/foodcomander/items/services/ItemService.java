@@ -24,11 +24,9 @@ public class ItemService {
   }
 
   public Item itemFindById(UUID id) {
-    var itemOptional = itemRepository.findById(id);
+    var itemOptional = itemRepository.findByIdAndEnabledTrue(id);
     var item = itemOptional.orElseThrow(ObjectNotFoundException::new);
-    if (item.getEnabled() == false) {
-      throw new ObjectNotFoundException();
-    }
+
     item.setFlavors(
         item.getFlavors().stream()
             .filter(flavor -> flavor.getEnabled().equals(true))
@@ -37,12 +35,13 @@ public class ItemService {
         item.getAddons().stream()
             .filter(addon -> addon.getEnabled().equals(true))
             .collect(Collectors.toList()));
+
     return item;
   }
 
   public List<Item> findAllItem() {
     var item = itemRepository.findAllByEnabledTrue();
-    item.stream()
+    item
         .forEach(
             obj -> {
               obj.setFlavors(
@@ -60,7 +59,8 @@ public class ItemService {
 
   public Item updateItem(UUID id, ItemUpdate itemUpdate) {
     var item = itemFindById(id);
-    return itemRepository.save(new Item(itemUpdate, item));
+    item.update(itemUpdate);
+    return itemRepository.save(item);
   }
 
   public void deleteItem(UUID id) {

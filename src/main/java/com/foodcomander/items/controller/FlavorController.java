@@ -16,36 +16,36 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/flavor")
+@RequestMapping("/item/flavor")
 @Api(tags = "Flavor")
 public class FlavorController {
 
   @Autowired private FlavorService flavorService;
 
   @ApiOperation(value = "Insert flavor")
-  @PostMapping("/item/{itemId}")
-  public ResponseEntity<Item> insertFlavor(@PathVariable UUID itemId, @RequestBody Flavor flavor) {
+  @PostMapping
+  public ResponseEntity<Item> insertFlavor(@RequestParam UUID itemId, @RequestBody Flavor flavor) {
     var newFlavor = flavorService.insertFlavor(itemId, flavor);
     var uri =
         ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{idItem}")
             .buildAndExpand(newFlavor.getId())
             .toUri();
-    return ResponseEntity.created(uri).body(newFlavor);
+    return ResponseEntity.created(uri).build();
   }
 
   @ApiOperation(value = "Update flavor")
-  @PutMapping("/item/{itemId}")
+  @PutMapping
   public ResponseEntity<Item> updateFlavor(
-      @PathVariable UUID itemId,@Valid @RequestBody FlavorUpdate flavorUpdate) {
+          @RequestParam UUID itemId, @Valid @RequestBody FlavorUpdate flavorUpdate) {
     var flavor = flavorService.updateFlavor(itemId, flavorUpdate);
     return ResponseEntity.ok(flavor);
   }
 
   @ApiOperation(value = "Delete flavor")
-  @DeleteMapping("/{id}/item/{itemId}")
-  public ResponseEntity<Void> deleteFlavor(@PathVariable UUID id, @PathVariable UUID itemId) {
-    flavorService.deleteFlavor(itemId, id);
+  @DeleteMapping
+  public ResponseEntity<Void> deleteFlavor(@RequestParam UUID flavorId, @RequestParam UUID itemId) {
+    flavorService.deleteFlavor(itemId, flavorId);
     return ResponseEntity.ok().build();
   }
 }

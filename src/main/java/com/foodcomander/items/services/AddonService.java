@@ -1,7 +1,6 @@
 package com.foodcomander.items.services;
 
 import com.foodcomander.items.dto.AddonUpdate;
-import com.foodcomander.items.exceptions.ObjectNotFoundException;
 import com.foodcomander.items.models.Addon;
 import com.foodcomander.items.models.Item;
 import com.foodcomander.items.repositories.ItemRepository;
@@ -26,7 +25,7 @@ public class AddonService {
 
   public Item updateAddon(UUID idItem,  AddonUpdate addonUpdate) {
     var item = itemService.itemFindById(idItem);
-    item.addonUpdate(addonUpdate);
+    item.updateAddon(addonUpdate);
     return itemRepository.save(item);
   }
 

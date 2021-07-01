@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import static java.util.Collections.unmodifiableList;
@@ -37,20 +38,6 @@ public class Item implements Serializable {
   private List<Flavor> flavors;
   private List<Addon> addons;
 
-  public Item(ItemUpdate itemUpdate, Item item) {
-    this.id = item.getId();
-    this.name = itemUpdate.getName();
-    this.description = itemUpdate.getDescription();
-    this.price = itemUpdate.getPrice();
-    this.classification = itemUpdate.getClassification();
-    this.size = itemUpdate.getSize();
-    this.imageUrl = itemUpdate.getImageUrl();
-    this.rating = itemUpdate.getRating();
-    this.enabled = itemUpdate.getEnabled();
-    this.flavors = item.getFlavors();
-    this.addons = item.getAddons();
-  }
-
   public Flavor findFlavorById(UUID idFlavor) {
     return this.flavors.stream()
         .filter(obj -> obj.getId().equals(idFlavor))
@@ -70,14 +57,19 @@ public class Item implements Serializable {
   }
 
   public void updateFlavor(FlavorUpdate flavorUpdate) {
-    var flavor =
-        this.flavors.stream()
-            .filter(obj -> obj.getId().equals(flavorUpdate.getId()))
-            .findFirst()
-            .orElseThrow(ObjectNotFoundException::new);
-    this.flavors.remove(flavor);
-    var newFlavor = new Flavor(flavor, flavorUpdate);
-    this.flavors.add(newFlavor);
+    var foundFlavor = false;
+
+    for (Flavor flavor : this.flavors) {
+      if (flavor.getId().equals(flavorUpdate.getId())) {
+        foundFlavor = true;
+        flavor.update(flavorUpdate);
+        break;
+      }
+    }
+
+    if (!foundFlavor) {
+      throw new ObjectNotFoundException();
+    }
   }
 
   public Addon findAddonById(UUID idAddon) {
@@ -90,18 +82,31 @@ public class Item implements Serializable {
   public void insertAddons(Addon addon) {
     this.addons.add(addon);
   }
-  public void addonUpdate(AddonUpdate addonUpdate) {
-    var addon = this.addons.stream().filter(obj -> obj.getId().equals(addonUpdate.getId())).findFirst().orElseThrow(ObjectNotFoundException::new);
+
+  public void updateAddon(AddonUpdate addonUpdate) {
+    var addon = findAddonById(addonUpdate.getId());
+
     this.addons.remove(addon);
     var newAddon = new Addon(addonUpdate);
     this.addons.add(newAddon);
   }
 
   public void deleteAddon(UUID idAddon) {
-    var addon = findAddonById(idAddon);
-    this.addons.remove(addon);
-    addon.setEnabled(false);
-    this.addons.add(addon);
+    this.addons.forEach(addon -> {
+      if (addon.getId().equals(idAddon))
+        addon.setEnabled(false);
+    });
+  }
+
+  public void update(ItemUpdate itemUpdate) {
+    this.name = itemUpdate.getName();
+    this.description = itemUpdate.getDescription();
+    this.price = itemUpdate.getPrice();
+    this.classification = itemUpdate.getClassification();
+    this.size = itemUpdate.getSize();
+    this.imageUrl = itemUpdate.getImageUrl();
+    this.rating = itemUpdate.getRating();
+    this.enabled = itemUpdate.getEnabled();
   }
 
   public List<Flavor> getFlavors() {
@@ -111,6 +116,4 @@ public class Item implements Serializable {
   public List<Addon> getAddons() {
     return unmodifiableList(this.addons);
   }
-
-
 }

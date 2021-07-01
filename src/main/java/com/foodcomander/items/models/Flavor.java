@@ -23,9 +23,7 @@ public class Flavor implements Serializable {
   private Boolean enabled;
   private BigDecimal price;
 
-  public Flavor(Flavor flavor, FlavorUpdate flavorUpdate) {
-
-    this.id = flavor.getId();
+  public void update(FlavorUpdate flavorUpdate) {
     this.name = flavorUpdate.getName();
     this.description = flavorUpdate.getDescription();
     this.enabled = flavorUpdate.getEnabled();

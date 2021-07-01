@@ -16,35 +16,35 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/addon")
+@RequestMapping("/item/addon")
 @Api(tags = "Addon")
 public class AddonController {
 
   @Autowired private AddonService addonService;
 
   @ApiOperation(value = "Insert addon")
-  @PostMapping("/item/{itemId}")
-  public ResponseEntity<Item> insertAddon(@PathVariable UUID itemId, @RequestBody Addon addon) {
+  @PostMapping
+  public ResponseEntity<Item> insertAddon(@RequestParam UUID itemId, @RequestBody Addon addon) {
     var newAddon = addonService.insertAddon(itemId, addon);
     var uri =
         ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{itemId}")
             .buildAndExpand(newAddon.getId())
             .toUri();
-    return ResponseEntity.created(uri).body(newAddon);
+    return ResponseEntity.created(uri).build();
   }
 
   @ApiOperation(value = "Update addon")
-  @PutMapping("item/{itemId}")
-  public ResponseEntity<Item> updateAddon(@PathVariable UUID itemId,@Valid @RequestBody AddonUpdate addonUpdate) {
+  @PutMapping
+  public ResponseEntity<Item> updateAddon(@RequestParam UUID itemId,@Valid @RequestBody AddonUpdate addonUpdate) {
     var addon = addonService.updateAddon(itemId, addonUpdate);
     return ResponseEntity.ok(addon);
   }
 
   @ApiOperation(value = "Delete addon")
-  @DeleteMapping("/{id}/item/{itemId}")
-  public ResponseEntity<Void> deleteAddon(@PathVariable UUID id, @PathVariable UUID itemId) {
-    addonService.deleteAddon(itemId, id);
+  @DeleteMapping
+  public ResponseEntity<Void> deleteAddon(@RequestParam UUID addonId, @RequestParam UUID itemId) {
+    addonService.deleteAddon(itemId, addonId);
     return ResponseEntity.ok().build();
   }
 }
